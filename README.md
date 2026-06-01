@@ -165,3 +165,23 @@ aws events put-targets \
 
 
   ![alt text](image-11.png)
+
+
+  # Screenshots for marking
+  ## Screenshot 1: AWS Config Dashboard Detection
+
+  ![alt text](image-12.png)
+
+  ![alt text](image-13.png)
+
+  ## Screenshot 2: Step Functions Execution Graph
+
+  ![alt text](image-14.png)
+
+  ## Screenshot 3: CloudWatch Logs Output
+
+  ![](image-15.png)
+
+## Screenshot 4: Remediated Security Group
+
+  ![alt text](image-16.png)

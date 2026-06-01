@@ -11,4 +11,6 @@ Create files named `config-trust-policy.json`, `config-s3-policy.json`, `lambda-
   `--role-name capstone8-config-role `
   `--assume-role-policy-document file://config-trust-policy.json`
 
-![alt text](image.png)
+![alt text](image-1.png)
+
+# 

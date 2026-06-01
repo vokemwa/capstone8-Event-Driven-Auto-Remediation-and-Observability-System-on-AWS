@@ -45,3 +45,18 @@ aws iam put-role-policy `
   --policy-document file://lambda-permissions-policy.json
 
   ![alt text](image-4.png)
+
+# Create and Configure the Step Functions Role
+
+## 1. Create the Step Functions Role using the trust policy
+aws iam create-role `
+  --role-name capstone-stepfunctions-role `
+  --assume-role-policy-document file://stepfunctions-trust-policy.json
+
+## 2. Attach the execution and remediation automation privileges
+aws iam put-role-policy `
+  --role-name capstone-stepfunctions-role `
+  --policy-name StepFunctionsExecutionAndSSMPolicy `
+  --policy-document file://stepfunctions-permissions-policy.json
+
+  ![alt text](image-5.png)

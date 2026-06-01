@@ -61,4 +61,25 @@ aws iam put-role-policy `
 
   ![alt text](image-5.png)
 
+ # Confirm the roles exist
   ![alt text](image-6.png)
+
+  # Set environment context variables for current session shell
+   `export AWS_REGION="us-east-1"`
+   `export ACCOUNT_ID="541426239397"`
+
+   # AWS Config Initialization
+
+   `aws configservice put-configuration-recorder \
+     --configuration-recorder name=default,roleARN=arn:aws:iam::${ACCOUNT_ID}:role/capstone-config-role \
+     --recording-group allSupported=true`
+
+   `aws s3 mb s3://capstone-config-bucket-${ACCOUNT_ID} --region ${AWS_REGION}`
+
+   `aws configservice put-delivery-channel \
+  --delivery-channel name=default,s3BucketName=capstone-config-bucket-${ACCOUNT_ID}`
+
+  `aws configservice start-configuration-recorder \
+  --configuration-recorder-name default`
+
+  

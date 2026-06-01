@@ -127,3 +127,14 @@ aws lambda update-function-configuration \
   --region ${AWS_REGION}
 
   ![alt text](image-9.png)
+
+  # 5. State Machine Provisioning
+
+aws stepfunctions create-state-machine \
+  --name CapstoneAutoRemediation \
+  --definition file://state-machine.json \
+  --role-arn arn:aws:iam::${ACCOUNT_ID}:role/capstone8-stepfunctions-role \
+  --region ${AWS_REGION}
+
+
+  ![alt text](image-10.png)

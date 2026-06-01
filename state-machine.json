@@ -1,0 +1,66 @@
+{
+  "Comment": "Robust Error-Aware State Machine Auto-Remediation Workflow",
+  "StartAt": "EvaluatePayload",
+  "States": {
+    "EvaluatePayload": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:541426239397:function:CapstoneEvaluator",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "RemediationFailureTriage"
+        }
+      ],
+      "Next": "DetermineRemediationPath"
+    },
+    "DetermineRemediationPath": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.status",
+          "StringEquals": "NON_COMPLIANT_RESOURCE_DETECTED",
+          "Next": "RemediateSecurityGroup"
+        }
+      ],
+      "Default": "CompliantNoOpEnd"
+    },
+    "RemediateSecurityGroup": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::aws-sdk:ssm:startAutomationExecution",
+      "Parameters": {
+        "DocumentName": "AWS-DisablePublicAccessForSecurityGroup",
+        "Parameters": {
+          "GroupId": [
+            "$.targetSecurityGroup"
+          ]
+        }
+      },
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "RemediationFailureTriage"
+        }
+      ],
+      "Next": "SuccessExecutionEnd"
+    },
+    "RemediationFailureTriage": {
+      "Type": "Fail",
+      "Error": "RemediationWorkflowFailed",
+      "Cause": "The automated security baseline fix execution pipeline crashed during execution."
+    },
+    "CompliantNoOpEnd": {
+      "Type": "Succeed"
+    },
+    "SuccessExecutionEnd": {
+      "Type": "Succeed"
+    }
+  }
+}

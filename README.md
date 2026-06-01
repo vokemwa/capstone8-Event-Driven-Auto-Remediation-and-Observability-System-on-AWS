@@ -185,3 +185,7 @@ aws events put-targets \
 ## Screenshot 4: Remediated Security Group
 
   ![alt text](image-16.png)
+
+  # Architecture
+
+  ![alt text](image-17.png)

@@ -82,4 +82,24 @@ aws iam put-role-policy `
   `aws configservice start-configuration-recorder \
   --configuration-recorder-name default`
 
-  
+  # Create Managed Rule for Monitoring Port 22 SSH Global Ingress Exposure
+aws configservice put-config-rule \
+  --config-rule '{
+    "ConfigRuleName": "restricted-ssh",
+    "Source": {
+      "Owner": "AWS",
+      "SourceIdentifier": "INCOMING_SSH_DISABLED"
+    }
+  }'
+
+
+# 3. Decoupled Routing Core Targets (SQS & Kinesis)
+# ----------------------------------------------------
+
+aws sqs create-queue --queue-name capstone8-audit-queue
+
+aws kinesis create-stream \
+  --stream-name capstone8-event-stream \
+  --shard-count 1
+
+  ![alt text](image-7.png)

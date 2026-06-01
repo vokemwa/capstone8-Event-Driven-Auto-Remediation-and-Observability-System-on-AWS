@@ -31,3 +31,17 @@ Create files named `config-trust-policy.json`, `config-s3-policy.json`, `lambda-
 
   ![alt text](image-3.png)
 
+# Create and Configure the Lambda Execution Role
+
+## 1. Create the Lambda Role using the trust policy
+aws iam create-role`
+  --role-name capstone-lambda-role`
+  --assume-role-policy-document file://lambda-trust-policy.json
+
+  ## 2. Attach the logging and X-Ray debugging permissions to the role
+aws iam put-role-policy `
+  --role-name capstone8-lambda-role `
+  --policy-name LambdaLoggingAndXRayPolicy `
+  --policy-document file://lambda-permissions-policy.json
+
+  ![alt text](image-4.png)

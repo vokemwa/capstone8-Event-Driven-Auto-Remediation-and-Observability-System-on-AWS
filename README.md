@@ -103,3 +103,27 @@ aws kinesis create-stream \
   --shard-count 1
 
   ![alt text](image-7.png)
+
+
+# 4. Lambda Function Build & Compilation
+# ----------------------------------------------------
+zip function.zip lambda.py
+
+aws lambda create-function \
+  --function-name CapstoneEvaluator \
+  --runtime python3.9 \
+  --role arn:aws:iam::${ACCOUNT_ID}:role/capstone8-lambda-role \
+  --handler lambda.lambda_handler \
+  --zip-file fileb://function.zip \
+  --region ${AWS_REGION}
+
+
+  ![alt text](image-8.png)
+
+# Enable AWS X-Ray Distributed Tracing Engine
+aws lambda update-function-configuration \
+  --function-name CapstoneEvaluator \
+  --tracing-config Mode=Active \
+  --region ${AWS_REGION}
+
+  ![alt text](image-9.png)

@@ -60,3 +60,5 @@ aws iam put-role-policy `
   --policy-document file://stepfunctions-permissions-policy.json
 
   ![alt text](image-5.png)
+
+  ![alt text](image-6.png)

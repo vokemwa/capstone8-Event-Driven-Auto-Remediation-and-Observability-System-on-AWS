@@ -20,3 +20,12 @@ Create files named `config-trust-policy.json`, `config-s3-policy.json`, `lambda-
   --policy-arn arn:aws:iam::aws:policy/service-role/AWS_ConfigRole`
 
   ![alt text](image-2.png)
+
+  # Attach your custom local S3 policy file for bucket access
+  
+  `aws iam put-role-policy
+  --role-name capstone-config-role
+  --policy-name ConfigS3BucketDeliveryPolicy
+  --policy-document file://config-s3-policy.json`
+
+  ![alt text](image-3.png)

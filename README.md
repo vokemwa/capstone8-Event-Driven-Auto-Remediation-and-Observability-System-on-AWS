@@ -138,3 +138,30 @@ aws stepfunctions create-state-machine \
 
 
   ![alt text](image-10.png)
+
+  # 6. EventBridge Bus Fan-out Orchestration Rules
+
+aws events put-rule \
+  --name ConfigNonCompliantRule \
+  --event-pattern '{
+    "source": ["aws.config"],
+    "detail-type": ["Config Rules Compliance Change"],
+    "detail": {
+      "newEvaluationResult": {
+        "complianceType": ["NON_COMPLIANT"]
+      }
+    }
+  }' \
+  --region ${AWS_REGION}
+
+aws events put-targets \
+  --rule ConfigNonCompliantRule \
+  --targets '[
+    {"Id":"1","Arn":"arn:aws:states:'${AWS_REGION}':'${ACCOUNT_ID}':stateMachine:CapstoneAutoRemediation"},
+    {"Id":"2","Arn":"arn:aws:sqs:'${AWS_REGION}':'${ACCOUNT_ID}':capstone8-audit-queue"},
+    {"Id":"3","Arn":"arn:aws:kinesis:'${AWS_REGION}':'${ACCOUNT_ID}':stream/capstone8-event-stream"}
+  ]' \
+  --region ${AWS_REGION}
+
+
+  ![alt text](image-11.png)

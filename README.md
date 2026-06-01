@@ -18,3 +18,5 @@ Create files named `config-trust-policy.json`, `config-s3-policy.json`, `lambda-
 `aws iam attach-role-policy 
   --role-name capstone8-config-role
   --policy-arn arn:aws:iam::aws:policy/service-role/AWS_ConfigRole`
+
+  ![alt text](image-2.png)
